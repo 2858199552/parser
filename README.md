@@ -1,4 +1,4 @@
-# <center>Parser</center>
+# <p align="center">Parser</p>
 
 # 项目背景
 
@@ -31,9 +31,9 @@
 * 编译样例代码
   * **Linux**
 
-    假设*Boost_1_74_0*库在用户家目录下：
+    假设*Boost_1_73_0*库在用户家目录下：
 
-    `` g++ test.cpp -o test -I ~/boost_1_74_0``
+    ``$ g++ test.cpp -o test -I ~/boost_1_73_0``
 
   * Windows
 
@@ -42,6 +42,8 @@
 * 运行
 
     直接运行即可，无其他附加项
+
+    ``$ ./test``
 
 # 主要负责人
 
