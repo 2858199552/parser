@@ -4,34 +4,30 @@
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 
 namespace client{
-  namespace qi = boost::spirit::qi;
-  namespace karma = boost::spirit::karma;
-  namespace ascii = boost::spirit::ascii;
-
   template <typename Iterator>
-    bool parse_numbers(Iterator first, Iterator last, std::list<double>& v){
-      using qi::double_;
-      using qi::phrase_parse;
-      using ascii::space;
+    bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v){
+      using boost::spirit::qi::double_;
+      using boost::spirit::qi::phrase_parse;
+      using boost::spirit::ascii::space;
 
-      bool r = phrase_parse(first, last, double_ >> *(',' >> double_), space, v);
+      bool r = phrase_parse(first, last, double_ % ',', space, v);
       if(first != last)
         return false;
       return r;
     }
 
   template <typename OutputIterator>
-    bool generate_numbers(OutputIterator& sink, std::list<double> const& v){
-      using karma::double_;
-      using karma::generate_delimited;
-      using ascii::space;
+    bool generate_numbers(OutputIterator& sink, std::vector<double> const& v){
+      using boost::spirit::karma::double_;
+      using boost::spirit::karma::generate_delimited;
+      using boost::spirit::ascii::space;
 
       bool r = generate_delimited(
           sink,
-          double_ << *(',' << double_),
+          double_ % ',',
           space,
           v
       );
@@ -45,7 +41,7 @@ int main(){
     if(str.empty() || str[0] == 'q' || str[0] == 'Q')
       break;
 
-    std::list<double> v;
+    std::vector<double> v;
     if(client::parse_numbers(str.begin(), str.end(), v)){
       std::string generated;
       std::back_insert_iterator<std::string> sink(generated);
